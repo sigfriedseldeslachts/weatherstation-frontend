@@ -1,0 +1,23 @@
+.badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+
+  .badge-dot {
+    @apply -ml-0.5 mr-1.5 h-2 w-2;
+  }
+
+  &.badge-green {
+    @apply bg-green-100 text-green-800;
+
+    .badge-dot {
+      @apply text-green-400;
+    }
+  }
+
+  &.badge-red {
+    @apply bg-red-100 text-red-800;
+
+    .badge-dot {
+      @apply text-red-400;
+    }
+  }
+}

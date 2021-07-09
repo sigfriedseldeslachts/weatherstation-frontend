@@ -3,34 +3,50 @@ export default ({ app }, inject) => {
     "temperature": {
       "prefix": "",
       "suffix": "°C",
+      "color": "#F59E0B",
     },
     "windspeed": {
       "prefix": "~",
       "suffix": "m/s",
+      "color": "#DC2626",
     },
     "illuminance": {
       "prefix": "",
       "suffix": "Lx",
+      "moreInfo": true,
+      "info": require('~/components/SensorInfo/Illuminance.vue').default,
+      "maxValue": Math.pow(2, 16),
+      "minValue": 0,
+      formatter (value) {
+        if (value >= this.maxValue) {
+          return ">" + value;
+        }
+
+        return value;
+      },
+      "color": "#FBBF24",
     },
     "humidity": {
       "prefix": "",
       "suffix": "%",
+      "color": "#3B82F6",
     },
     "pm2_5": {
       "prefix": "",
       "suffix": "µg/m<sup>3</sup>",
-      "moreInfo": true,
       "page": "",
+      "color": "#1F2937",
     },
     "pm10": {
       "prefix": "",
       "suffix": "µg/m<sup>3</sup>",
-      "moreInfo": true,
       "page": "",
+      "color": "#6B7280",
     },
     "pressure": {
       "prefix": "",
       "suffix": "hPa",
+      "color": "#7C3AED",
       formatter: (value) => {
         // Given value is in Pascal, format it to hPa
         return Math.round(value / 100);
@@ -47,6 +63,7 @@ export default ({ app }, inject) => {
 
       return this[sensor][attr];
     },
+
     /**
      * @return formatted value
      */
@@ -57,12 +74,39 @@ export default ({ app }, inject) => {
 
       return this[sensor].formatter(value);
     },
+
+    /**
+     * Checks if the value of the sensor exceeds the maximum value
+     * @return true if overload, otherwise false
+     */
+    isSensorOverload(sensor, value) {
+      if (!this.attributeExists(sensor, 'maxValue')) return false;
+
+      return value >= this[sensor]['maxValue'];
+    },
+
+    renderComponent (sensor, component) {
+      if (!this.attributeExists(sensor, component)) return "";
+
+      return this[sensor][component];
+    },
+
     /**
      * Check if sensor exists
      * @return true if exists otherwise false
      */
     sensorExists(sensor) {
       return this[sensor] !== null;
+    },
+
+    /**
+     * Checks if the attribute exists on the sensor
+     * @param {String} sensor 
+     * @param {String} attr 
+     * @returns true if it exists, otherwise false, and also false if sensor does not exist
+     */
+    attributeExists(sensor, attr) {
+      return this.sensorExists(sensor) && typeof this[sensor][attr] !== 'undefined';
     }
   });
 }

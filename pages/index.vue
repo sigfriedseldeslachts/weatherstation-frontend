@@ -1,6 +1,7 @@
 <template>
     <div>
         <QuickStats :data="actualData" />
+        <Charts :data="chartData" />
     </div>
 </template>
 
@@ -10,6 +11,7 @@ export default {
   data () {
     return {
       actualData: {},
+      chartData: {},
     }
   },
   methods: {
@@ -28,10 +30,13 @@ export default {
   },
   async asyncData ({ $axios }) {
     try {
-      const { data } = await $axios.get('http://localhost:8080/api/measurements/actual');
+      const actualReq = $axios.$get('http://localhost:8080/api/measurements/actual');
+      const lastHourReq = $axios.$get('http://localhost:8080/api/measurements');
+      const [ actualData, chartData ] = await Promise.all([actualReq, lastHourReq]);
 
       return {
-        actualData: data,
+        actualData,
+        chartData
       }
     } catch (error) {
       console.error(error);

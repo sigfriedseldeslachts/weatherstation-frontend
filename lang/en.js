@@ -1,7 +1,9 @@
 export default {
   "quickstats": "Currently",
+  "lastHour": "Last hour",
   "moreInfo": "More info",
   "lastUpdate": "Last updated at",
+  "sensorOverload": "Sensor overload",
   "sensors": {
     "temperature": {
       "name": "Temperature",
@@ -11,6 +13,7 @@ export default {
     },
     "illuminance": {
       "name": "Illuminance",
+      "description": "",
     },
     "humidity": {
       "name": "Relative humidity",
@@ -24,5 +27,7 @@ export default {
     "pressure": {
       "name": "Pressure",
     }
-  }
+  },
+
+  "time": "Time",
 }
