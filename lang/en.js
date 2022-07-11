@@ -44,4 +44,8 @@ export default {
   },
 
   "time": "Time",
+  "rotatePhone": {
+    "title": "Your device is too small to display a graph.",
+    "description": "If you are using a smartphone or tablet, try turning it to portrait mode.",
+  }
 }

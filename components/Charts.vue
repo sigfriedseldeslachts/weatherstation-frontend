@@ -3,7 +3,21 @@
     <h3 class="text-lg leading-6 font-medium text-gray-900" v-t="'lastHour'" />
     <p class="text-sm text-gray-700 mb-2" v-t="'lastHourDescription'" />
 
-    <canvas ref="canvas" />
+    <div class="rounded-md bg-red-50 p-4" role="alert" aria-labelledby="rotate-phone-alert-title" v-if="rotatePhoneMsg">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-red-800" id="rotate-phone-alert-title" v-t="'rotatePhone.title'" />
+          <p v-t="'rotatePhone.description'" class="mt-2 text-sm text-red-700" />
+        </div>
+      </div>
+    </div>
+
+    <canvas ref="canvas" v-show="!rotatePhoneMsg" />
   </div>
 </template>
 
@@ -16,6 +30,7 @@ export default {
   data () {
     return {
       chartjs: null,
+      rotatePhoneMsg: false,
     }
   },
   props: {
@@ -27,7 +42,7 @@ export default {
   },
   methods: {
     createChart () {
-      if (process.server || !this.hasData) return;
+      if (!this.hasData) return;
 
       this.chartjs = new Chart(this.$refs['canvas'].getContext('2d'), {
         type: 'line',
@@ -37,12 +52,14 @@ export default {
         options: {
           responsive: true,
           spanGaps: true,
+          normalized: true,
+          animation: false,
           decimation: {
             enabled: true,
           },
           elements: {
-            point:{
-              radius: 0
+            point: {
+              radius: 2.5
             }
           },
           scales: {
@@ -70,13 +87,27 @@ export default {
     },
     updateChart() {
       if (this.chartjs === null) {
-        this.createChart();
+        if (window.innerWidth < 550) {
+          this.rotatePhoneMsg = true;
+        } else {
+          this.createChart();
+          this.rotatePhoneMsg = false;
+        }
+
         return;
       }
 
-      this.chartjs.data.datasets = this.getDataForChart;
+      if (window.innerWidth < 550) {
+        this.rotatePhoneMsg = true;
+        this.chartjs.destroy();
+        this.chartjs = null;
+        return;
+      }
+
+
+      this.$set(this.chartjs.data, 'datasets', this.getDataForChart);
       this.chartjs.update();
-    }
+    },
   },
   computed: {
     hasData () {
@@ -102,8 +133,14 @@ export default {
     }
   },
   mounted () {
-    this.createChart();
+    this.updateChart();
     this.$root.$on('chart:update', this.updateChart);
+  },
+  created () {
+    window.addEventListener("resize", this.updateChart);
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.updateChart);
   }
 }
 </script>

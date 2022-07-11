@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <div class="rounded-md bg-yellow-50 p-4 mt-4">
+    <div class="rounded-md bg-yellow-50 p-4 mt-4" v-if="hasOverloadedSensor">
       <div class="flex">
         <div class="flex-shrink-0">
           <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

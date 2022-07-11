@@ -1,8 +1,10 @@
 <template>
-    <div>
-        <QuickStats :data="sortActualData" />
-        <Charts :data="chartData" />
-    </div>
+  <div>
+    <QuickStats :data="sortActualData" />
+    <client-only>
+      <Charts :data="chartData" />
+    </client-only>
+  </div>
 </template>
 
 <script>
@@ -34,8 +36,6 @@ export default {
   },
   methods: {
     subscribeForMeasurementUpdates() {
-      if (process.server) return;
-
       this.$websocket.stomp.connect({}, (frame) => {
         this.$websocket.stomp.subscribe('/measurements/update', ({ body }) => {
           const data = JSON.parse(body);
@@ -46,10 +46,22 @@ export default {
           });
         });
       });
+    },
+    async updateChart () {
+      try {
+        const { data } = await this.$axios.$get('/api/measurements');
+
+        this.$set(this, 'chartData', data);
+        this.$root.$emit('chart:update');
+      } catch (error) {}
     }
   },
   created () {
+    if (process.server) return;
     this.subscribeForMeasurementUpdates();
+    setInterval(() => {
+      this.updateChart();
+    }, 30000); // Update the chart every 30 seconds
   },
   async asyncData ({ $axios }) {
     try {
