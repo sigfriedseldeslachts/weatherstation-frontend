@@ -8,11 +8,14 @@ WORKDIR /usr/src/nuxt-app
 COPY . /usr/src/nuxt-app/
 
 # Update and install
-RUN yarn && \
+RUN apk --no-cache upgrade && \
+  apk add --no-cache git python3 make g++ && \
+  yarn && \
   yarn build && \
   rm -rf /usr/src/nuxt-app/node_modules && \
   yarn install --production && \
-  yarn cache clean
+  yarn cache clean && \
+  apk del git python3 make g++
 
 EXPOSE 3000
 ENV NUXT_HOST=0.0.0.0
