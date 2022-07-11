@@ -1,6 +1,6 @@
 <template>
     <div>
-        <QuickStats :data="actualData" />
+        <QuickStats :data="sortActualData" />
         <Charts :data="chartData" />
     </div>
 </template>
@@ -11,7 +11,25 @@ export default {
   data () {
     return {
       actualData: {},
-      chartData: {},
+      chartData: {}
+    }
+  },
+  computed: {
+    sortActualData () {
+      // Sort the sensors based on the order in the config
+      const sortedKeys = Object.keys(this.actualData).sort((a, b) => {
+        const aIndex = this.$sensors.getSensorAttr(a, 'order');
+        const bIndex = this.$sensors.getSensorAttr(b, 'order');
+        return aIndex - bIndex;
+      });
+
+      // Now create a new object with the sorted keys
+      const sortedData = {};
+      sortedKeys.forEach((key) => {
+        sortedData[key] = this.actualData[key];
+      });
+
+      return sortedData;
     }
   },
   methods: {
@@ -20,7 +38,12 @@ export default {
 
       this.$websocket.stomp.connect({ }, (frame) => {
         this.$websocket.stomp.subscribe('/measurements/update', ({ body }) => {
-          this.actualData = JSON.parse(body);
+          const data = JSON.parse(body);
+
+          // Replace the data in actualData with the values present in the message
+          Object.keys(data).forEach(sensorName => {
+            this.$set(this.actualData, sensorName, data[sensorName]);
+          });
         });
       });
     }
@@ -30,9 +53,9 @@ export default {
   },
   async asyncData ({ $axios }) {
     try {
-      const actualReq = $axios.$get('http://localhost:8080/api/measurements/actual');
-      const lastHourReq = $axios.$get('http://localhost:8080/api/measurements');
-      const [ actualData, chartData ] = await Promise.all([actualReq, lastHourReq]);
+      const latestReq = $axios.$get('/api/measurements/latest');
+      const lastHourReq = $axios.$get('/api/measurements');
+      const [ actualData, chartData ] = await Promise.all([latestReq, lastHourReq]);
 
       return {
         actualData,

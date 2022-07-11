@@ -5,7 +5,7 @@
     </template>
 
     <template>
-      <p class="text-gray-700" v-t="'sensors.illuminance.description'" />
+      <p class="text-gray-700 text-sm" v-t="'sensors.illuminance.description'" />
 
       <div class="mt-4 shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <table class="min-w-full divide-y divide-gray-200">

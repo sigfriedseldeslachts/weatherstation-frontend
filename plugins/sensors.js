@@ -4,11 +4,13 @@ export default ({ app }, inject) => {
       "prefix": "",
       "suffix": "°C",
       "color": "#F59E0B",
+      "order": 0,
     },
     "windspeed": {
       "prefix": "~",
       "suffix": "m/s",
       "color": "#DC2626",
+      "order": 2,
     },
     "illuminance": {
       "prefix": "",
@@ -17,6 +19,8 @@ export default ({ app }, inject) => {
       "info": require('~/components/SensorInfo/Illuminance.vue').default,
       "maxValue": Math.pow(2, 16),
       "minValue": 0,
+      "color": "#FBBF24",
+      "order": 4,
       formatter (value) {
         if (value >= this.maxValue) {
           return ">" + value;
@@ -24,29 +28,33 @@ export default ({ app }, inject) => {
 
         return value;
       },
-      "color": "#FBBF24",
     },
     "humidity": {
       "prefix": "",
       "suffix": "%",
       "color": "#3B82F6",
+      "order": 1,
     },
-    "pm2_5": {
+    "pm25": {
       "prefix": "",
       "suffix": "µg/m<sup>3</sup>",
       "page": "",
       "color": "#1F2937",
+      "order": 5,
     },
     "pm10": {
       "prefix": "",
       "suffix": "µg/m<sup>3</sup>",
       "page": "",
       "color": "#6B7280",
+      "order": 6,
     },
     "pressure": {
       "prefix": "",
       "suffix": "hPa",
       "color": "#7C3AED",
+      "order": 3,
+      "defaultHidden": true,
       formatter: (value) => {
         // Given value is in Pascal, format it to hPa
         return Math.round(value / 100);
@@ -68,6 +76,10 @@ export default ({ app }, inject) => {
      * @return formatted value
      */
     getFormattedSensorValue(sensor, value) {
+      if (typeof value === 'object' && value.hasOwnProperty('value')) {
+        value = value.value;
+      }
+
       if (!this.sensorExists(sensor) || typeof this[sensor].formatter === 'undefined') {
         return value;
       }
@@ -81,6 +93,10 @@ export default ({ app }, inject) => {
      */
     isSensorOverload(sensor, value) {
       if (!this.attributeExists(sensor, 'maxValue')) return false;
+
+      if (typeof value === 'object' && value.hasOwnProperty('value')) {
+        value = value.value;
+      }
 
       return value >= this[sensor]['maxValue'];
     },
@@ -96,13 +112,13 @@ export default ({ app }, inject) => {
      * @return true if exists otherwise false
      */
     sensorExists(sensor) {
-      return this[sensor] !== null;
+      return typeof this[sensor] !== 'undefined';
     },
 
     /**
      * Checks if the attribute exists on the sensor
-     * @param {String} sensor 
-     * @param {String} attr 
+     * @param {String} sensor
+     * @param {String} attr
      * @returns true if it exists, otherwise false, and also false if sensor does not exist
      */
     attributeExists(sensor, attr) {

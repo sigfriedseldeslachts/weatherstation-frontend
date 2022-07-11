@@ -3,8 +3,8 @@ export default {
   "lastHour": "Afgelopen uur",
   "lastHourDescription": "De onderstaande grafiek toont het afgelopen uur. De waardes zijn het gemiddelde over 1 minuut.",
   "moreInfo": "Meer info",
-  "lastUpdate": "Laatst geupdatet om ",
-  "sensorOverload": "Sensor overbelasting",
+  "lastUpdate": "Geüpdatet om ",
+  "sensorOverload": "Overbelast",
   "sensors": {
     "temperature": {
       "name": "Temperatuur",
@@ -27,7 +27,7 @@ export default {
     "humidity": {
       "name": "Relatieve luchtvochtigheid",
     },
-    "pm2_5": {
+    "pm25": {
       "name": "Fijnstof (PM2.5)",
     },
     "pm10": {

@@ -39,6 +39,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/proxy',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt-community/nuxt-i18n
@@ -70,8 +71,16 @@ export default {
     ],
   ],
 
+  // https://github.com/nuxt-community/proxy-module
+  proxy: {
+    '/api': process.env.API_ROOT_URL,
+    '/ws/measurements': { target: process.env.API_ROOT_URL, ws: true },
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    proxy: true,
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

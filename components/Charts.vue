@@ -35,6 +35,7 @@ export default {
         },
         options: {
           responsive: true,
+          spanGaps: true,
           decimation: {
             enabled: true,
           },
@@ -65,21 +66,26 @@ export default {
           },
         },
       });
+    },
+    updateChart() {
+      this.chartjs.data.datasets = this.getDataForChart;
+      this.chartjs.update();
     }
   },
   computed: {
     getDataForChart () {
       let data = [];
 
-      Object.keys(this.data).forEach((key) => {
-        const color = this.$sensors.getSensorAttr(key, 'color');
+      Object.keys(this.data).forEach((sensorName) => {
+        const color = this.$sensors.getSensorAttr(sensorName, 'color');
 
         data.push({
-          label: this.$t(`sensors.${key}.name`),
-          data: this.data[key],
+          label: this.$t(`sensors.${sensorName}.name`),
+          data: this.data[sensorName],
           backgroundColor: color,
           borderColor: color,
-          lineTension: 0.2
+          lineTension: 0.2,
+          hidden: this.$sensors.getSensorAttr(sensorName, 'defaultHidden'),
         })
       });
 
@@ -88,6 +94,7 @@ export default {
   },
   mounted () {
     this.createChart();
+    this.$root.$on('chart:update', this.updateChart);
   }
 }
 </script>

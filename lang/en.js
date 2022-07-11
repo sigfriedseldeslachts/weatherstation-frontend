@@ -18,7 +18,7 @@ export default {
     "humidity": {
       "name": "Relative humidity",
     },
-    "pm2_5": {
+    "pm25": {
       "name": "Particulate Matter (PM2.5)",
     },
     "pm10": {
