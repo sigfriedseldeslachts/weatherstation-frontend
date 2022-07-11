@@ -17,13 +17,14 @@ export default ({ app }, inject) => {
       "suffix": "Lx",
       "moreInfo": true,
       "info": require('~/components/SensorInfo/Illuminance.vue').default,
-      "maxValue": Math.pow(2, 16),
+      "maxValue": 40000,
       "minValue": 0,
       "color": "#FBBF24",
       "order": 4,
+      "defaultHidden": true,
       formatter (value) {
         if (value >= this.maxValue) {
-          return ">" + value;
+          return ">" + 40000;
         }
 
         return value;
@@ -81,6 +82,10 @@ export default ({ app }, inject) => {
       }
 
       if (!this.sensorExists(sensor) || typeof this[sensor].formatter === 'undefined') {
+        if (typeof value === 'number') {
+          return (new Intl.NumberFormat('nl-BE')).format(value);
+        }
+
         return value;
       }
 

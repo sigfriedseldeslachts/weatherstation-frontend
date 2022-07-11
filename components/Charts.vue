@@ -1,7 +1,8 @@
 <template>
-  <div class="mt-8">
+  <div v-show="hasData" class="mt-8">
     <h3 class="text-lg leading-6 font-medium text-gray-900" v-t="'lastHour'" />
     <p class="text-sm text-gray-700 mb-2" v-t="'lastHourDescription'" />
+
     <canvas ref="canvas" />
   </div>
 </template>
@@ -26,7 +27,7 @@ export default {
   },
   methods: {
     createChart () {
-      if (process.server) return;
+      if (process.server || !this.hasData) return;
 
       this.chartjs = new Chart(this.$refs['canvas'].getContext('2d'), {
         type: 'line',
@@ -68,11 +69,19 @@ export default {
       });
     },
     updateChart() {
+      if (this.chartjs === null) {
+        this.createChart();
+        return;
+      }
+
       this.chartjs.data.datasets = this.getDataForChart;
       this.chartjs.update();
     }
   },
   computed: {
+    hasData () {
+      return Object.keys(this.data).length > 0;
+    },
     getDataForChart () {
       let data = [];
 

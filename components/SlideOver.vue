@@ -2,10 +2,10 @@
   <div :class="{ 'fixed inset-0 overflow-hidden': open }">
     <div :class="{ 'absolute inset-0 overflow-hidden': open }">
       <transition enter-active-class="ease-in-out duration-500" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="ease-in-out duration-500" leave-class="opacity-100" leave-to-class="opacity-0">
-        <div @click="closeModal()" v-if="open" class="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" />
+        <div @click="closeModal()" v-if="open" class="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-10" aria-hidden="true" />
       </transition>
 
-      <section class="absolute inset-y-0 right-0 pl-10 max-w-full flex sm:pl-16" aria-labelledby="slide-over-heading">
+      <section class="absolute inset-y-0 right-0 pl-10 max-w-full flex sm:pl-16 z-20" aria-labelledby="slide-over-heading">
         <transition enter-active-class="transform transition ease-in-out duration-500 sm:duration-700" enter-class="translate-x-full" enter-to-class="translate-x-0" leave-active-class="transform transition ease-in-out duration-500 sm:duration-700" leave-class="translate-x-0" leave-to-class="translate-x-full">
           <div class="w-screen max-w-2xl" v-if="open">
             <div class="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">

@@ -36,7 +36,7 @@ export default {
     subscribeForMeasurementUpdates() {
       if (process.server) return;
 
-      this.$websocket.stomp.connect({ }, (frame) => {
+      this.$websocket.stomp.connect({}, (frame) => {
         this.$websocket.stomp.subscribe('/measurements/update', ({ body }) => {
           const data = JSON.parse(body);
 
@@ -58,8 +58,8 @@ export default {
       const [ actualData, chartData ] = await Promise.all([latestReq, lastHourReq]);
 
       return {
-        actualData,
-        chartData
+        actualData: actualData.data,
+        chartData: chartData.data
       }
     } catch (error) {
       console.error(error);
