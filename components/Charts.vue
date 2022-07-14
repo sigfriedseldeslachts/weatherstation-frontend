@@ -1,7 +1,7 @@
 <template>
   <div v-show="hasData" class="mt-3">
-    <h3 class="text-lg leading-6 font-medium text-gray-900" v-t="'graphs.title'" />
-    <p class="text-sm text-gray-700 mb-2" v-t="'graphs.description'" />
+    <h3 class="text-lg leading-6 font-medium text-gray-900" v-t="'charts.title'" />
+    <p class="text-sm text-gray-700 mb-2" v-t="'charts.description'" />
 
     <div class="rounded-md bg-red-50 p-4" role="alert" aria-labelledby="rotate-phone-alert-title" v-if="rotatePhoneMsg">
       <div class="flex">
