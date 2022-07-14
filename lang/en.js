@@ -47,5 +47,18 @@ export default {
   "rotatePhone": {
     "title": "Your device is too small to display a graph.",
     "description": "If you are using a smartphone or tablet, try turning it to portrait mode.",
+  },
+  "tabs": {
+    "select": "Select a tab",
+    "label": "Tabs",
+  },
+  "charts": {
+    "hour": "Last hour",
+    "day": "Last day",
+    "week": "Last week",
+    "month": "Month",
+    "year": "Year",
+    "title": "Historical graphs",
+    "description": "Below you can see the historical data for a certain period. The values show an average over a certain period (1 hour for day, 1 day for week, 1 day for month, 1 month for year)."
   }
 }

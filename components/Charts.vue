@@ -1,7 +1,7 @@
 <template>
-  <div v-show="hasData" class="mt-8">
-    <h3 class="text-lg leading-6 font-medium text-gray-900" v-t="'lastHour'" />
-    <p class="text-sm text-gray-700 mb-2" v-t="'lastHourDescription'" />
+  <div v-show="hasData" class="mt-3">
+    <h3 class="text-lg leading-6 font-medium text-gray-900" v-t="'graphs.title'" />
+    <p class="text-sm text-gray-700 mb-2" v-t="'graphs.description'" />
 
     <div class="rounded-md bg-red-50 p-4" role="alert" aria-labelledby="rotate-phone-alert-title" v-if="rotatePhoneMsg">
       <div class="flex">
@@ -38,14 +38,18 @@ export default {
       type: Object,
       required: true,
       default: {},
-    }
+    },
+    type: {
+      type: String,
+      required: true,
+    },
   },
   methods: {
     createChart () {
       if (!this.hasData) return;
 
       this.chartjs = new Chart(this.$refs['canvas'].getContext('2d'), {
-        type: 'line',
+        type: this.$charts.getChartAttr(this.type, 'type', 'line'),
         data: {
           datasets: this.getDataForChart
         },

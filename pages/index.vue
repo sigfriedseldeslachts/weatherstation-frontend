@@ -1,8 +1,18 @@
 <template>
   <div>
     <QuickStats :data="sortActualData" />
+
     <client-only>
-      <Charts :data="chartData" />
+      <!-- Tabs -->
+      <NavigationTabs :options="$charts.getChartTypes()" :custom-label="(name) => this.$t('charts.' + name)" track-by="code" class="mt-8">
+        <template #default>
+
+          <NavigationTab v-for="chart in $charts.getChartTypes()" :key="chart">
+            <Charts :data="charts[chart]" :type="chart" />
+          </NavigationTab>
+
+        </template>
+      </NavigationTabs>
     </client-only>
   </div>
 </template>
@@ -13,7 +23,11 @@ export default {
   data () {
     return {
       actualData: {},
-      chartData: {}
+      charts: {
+        hour: null,
+        day: null,
+        week: null,
+      }
     }
   },
   computed: {
@@ -58,20 +72,28 @@ export default {
   },
   created () {
     if (process.server) return;
+
     this.subscribeForMeasurementUpdates();
+
     setInterval(() => {
       this.updateChart();
     }, 30000); // Update the chart every 30 seconds
   },
   async asyncData ({ $axios }) {
     try {
-      const latestReq = $axios.$get('/api/measurements/latest');
-      const lastHourReq = $axios.$get('/api/measurements');
-      const [ actualData, chartData ] = await Promise.all([latestReq, lastHourReq]);
+      const latest = $axios.$get('/api/measurements/latest');
+      const lastHour = $axios.$get('/api/measurements');
+      const historyDay = $axios.$get('/api/history/day');
+      const historyWeek = $axios.$get('/api/history/week');
+      const [ actualData, lastHourData, historyDayData, historyWeekData ] = await Promise.all([latest, lastHour, historyDay, historyWeek]);
 
       return {
         actualData: actualData.data,
-        chartData: chartData.data
+        charts: {
+          hour: lastHourData.data,
+          day: historyDayData.data,
+          week: historyWeekData.data,
+        },
       }
     } catch (error) {
       console.error(error);

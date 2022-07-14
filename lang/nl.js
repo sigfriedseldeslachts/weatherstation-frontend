@@ -46,5 +46,18 @@ export default {
   "rotatePhone": {
     "title": "Uw apparaat is te klein om een grafiek te weergeven.",
     "description": "Als u gebruik maakt van een smartphone of tablet, probeer deze dan te draaien in portret modus.",
+  },
+  "tabs": {
+    "select": "Selecteer een tab",
+    "label": "Tabs"
+  },
+  "charts": {
+    "hour": "Afgelopen uur",
+    "day": "Afgelopen dag",
+    "week": "Afgelopen week",
+    "month": "Maand",
+    "year": "Jaar",
+    "title": "Historische grafieken",
+    "description": "Hieronder kan u de historische gegevens zien over een bepaalde periode. De waardes tonen een gemiddelde aan over en bepaalde periode (1 uur voor dag, 1 dag voor week, 1 dag voor maand, 1 maand voor jaar).",
   }
 }
