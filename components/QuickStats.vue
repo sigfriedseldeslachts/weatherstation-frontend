@@ -2,7 +2,7 @@
   <div>
     <h3 class="flex gap-2 items-center">
       <span class="text-lg leading-6 font-medium text-gray-900" v-t="'quickstats'" />
-      <span v-if="hasData" class="badge badge-green">
+      <span v-if="hasData && !lastUpdateLongTimeAgo" class="badge badge-green">
         <svg class="badge-dot animate-pulse" fill="currentColor" viewBox="0 0 8 8" cla>
           <circle cx="4" cy="4" r="3" />
         </svg>
@@ -86,6 +86,16 @@ export default {
   computed: {
     hasData () {
       return Object.keys(this.data).length > 0;
+    },
+    lastUpdateLongTimeAgo () {
+      if (!this.hasData) {
+        return false;
+      }
+
+      // Check if the newest update of any sensor is more than 5 minutes ago
+      return Object.keys(this.data).some(key => {
+        return this.data[key].timestamp && DateTime.local().diff(DateTime.fromISO(this.data[key].timestamp)).as('minutes') > 5;
+      });
     },
     hasOverloadedSensor () {
       return Object.keys(this.data).some(key => this.$sensors.isSensorOverload(key, this.data[key]));

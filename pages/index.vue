@@ -3,8 +3,12 @@
     <QuickStats :data="sortActualData" />
 
     <client-only>
+
+      <h3 class="text-lg leading-6 font-medium text-gray-900 mt-8" v-t="'charts.title'" />
+      <p class="text-sm text-gray-700 mb-2" v-t="'charts.description'" />
+
       <!-- Tabs -->
-      <NavigationTabs :options="$charts.getChartTypes()" :custom-label="(name) => this.$t('charts.' + name)" track-by="code" class="mt-8">
+      <NavigationTabs :options="$charts.getChartTypes()" :custom-label="(name) => this.$t('charts.' + name)" track-by="code" class="mt-3">
         <template #default>
 
           <NavigationTab v-for="chart in $charts.getChartTypes()" :key="chart">
@@ -27,6 +31,7 @@ export default {
         hour: null,
         day: null,
         week: null,
+        month: null,
       }
     }
   },
@@ -85,7 +90,8 @@ export default {
       const lastHour = $axios.$get('/api/measurements');
       const historyDay = $axios.$get('/api/history/day');
       const historyWeek = $axios.$get('/api/history/week');
-      const [ actualData, lastHourData, historyDayData, historyWeekData ] = await Promise.all([latest, lastHour, historyDay, historyWeek]);
+      const historyMonth = $axios.$get('/api/history/month');
+      const [ actualData, lastHourData, historyDayData, historyWeekData, historyMonthData ] = await Promise.all([latest, lastHour, historyDay, historyWeek, historyMonth]);
 
       return {
         actualData: actualData.data,
@@ -93,6 +99,7 @@ export default {
           hour: lastHourData.data,
           day: historyDayData.data,
           week: historyWeekData.data,
+          month: historyMonthData.data,
         },
       }
     } catch (error) {

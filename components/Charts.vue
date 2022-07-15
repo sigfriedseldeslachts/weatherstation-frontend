@@ -1,8 +1,5 @@
 <template>
   <div v-show="hasData" class="mt-3">
-    <h3 class="text-lg leading-6 font-medium text-gray-900" v-t="'charts.title'" />
-    <p class="text-sm text-gray-700 mb-2" v-t="'charts.description'" />
-
     <div class="rounded-md bg-red-50 p-4" role="alert" aria-labelledby="rotate-phone-alert-title" v-if="rotatePhoneMsg">
       <div class="flex">
         <div class="flex-shrink-0">
@@ -76,6 +73,10 @@ export default {
               ticks: {
                 autoSkip: true,
                 maxTicksLimit: 20
+              },
+              time: {
+                isoWeekday: true,
+                unit: this.$charts.getChartAttr(this.type, 'timeUnit', 'hour'), // https://www.chartjs.org/docs/latest/axes/cartesian/time.html#time-units
               }
             },
             y: {

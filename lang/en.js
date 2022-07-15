@@ -54,10 +54,10 @@ export default {
   },
   "charts": {
     "hour": "Last hour",
-    "day": "Last day",
-    "week": "Last week",
-    "month": "Month",
-    "year": "Year",
+    "day": "Today",
+    "week": "Current week",
+    "month": "Current month",
+    "year": "Current year",
     "title": "Historical graphs",
     "description": "Below you can see the historical data for a certain period. The values show an average over a certain period (1 hour for day, 1 day for week, 1 day for month, 1 month for year)."
   }

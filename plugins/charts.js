@@ -1,20 +1,24 @@
 export default ({ app }, inject) => {
   inject('charts', {
     "hour": {
-      "type": "line"
+      "type": "line",
+      "timeUnit": "minute",
     },
     "day": {
-      "type": "bar"
+      "type": "line",
+      "timeUnit": "hour",
     },
     "week": {
-      "type": "bar"
+      "type": "line",
+      "timeUnit": "day",
     },
     "month": {
       "type": "bar",
-      disabled: true,
+      "timeUnit": "day",
     },
     "year": {
       "type": "bar",
+      "timeUnit": "month",
       disabled: true,
     },
     getChartTypes() {
