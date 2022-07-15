@@ -1,3 +1,6 @@
+import Vue from "vue";
+const emptyComponent = require("~/components/SensorInfo/EmptyComponent.vue").default;
+
 export default ({ app }, inject) => {
   inject('sensors', {
     "temperature": {
@@ -42,6 +45,8 @@ export default ({ app }, inject) => {
       "page": "",
       "color": "#1F2937",
       "order": 5,
+      "moreInfo": true,
+      "info":  require('~/components/SensorInfo/ParticulateMatter.vue').default,
     },
     "pm10": {
       "prefix": "",
@@ -49,6 +54,8 @@ export default ({ app }, inject) => {
       "page": "",
       "color": "#6B7280",
       "order": 6,
+      "moreInfo": true,
+      "moreInfoKey": "pm25",
     },
     "pressure": {
       "prefix": "",
@@ -107,7 +114,7 @@ export default ({ app }, inject) => {
     },
 
     renderComponent (sensor, component) {
-      if (!this.attributeExists(sensor, component)) return "";
+      if (!this.attributeExists(sensor, component)) return emptyComponent;
 
       return this[sensor][component];
     },

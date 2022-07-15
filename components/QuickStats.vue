@@ -34,7 +34,7 @@
               </div>
 
               <!-- Dynamic component insertion -->
-              <component v-if="$sensors.getSensorAttr(key, 'moreInfo')" :is="$sensors.renderComponent(key, 'info')" />
+              <component :is="$sensors.renderComponent(key, 'info')" />
             </dd>
           </div>
         </div>
@@ -103,6 +103,12 @@ export default {
   },
   methods: {
     openInfoModal (sensor) {
+      // If the config defines another key for the more info modal, use that one
+      const changedSensorKey = this.$sensors.getSensorAttr(sensor, 'moreInfoKey');
+      if (changedSensorKey) {
+        sensor = changedSensorKey;
+      }
+
       this.$root.$emit('toggle-info-modal:' + sensor, true);
     },
     humanizeTimestamp(timestamp) {

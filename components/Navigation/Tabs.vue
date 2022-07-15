@@ -85,7 +85,7 @@ export default {
       }
 
       select {
-        @apply block w-full focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md;
+        @apply block w-full focus:ring-green-500 focus:border-green-500 border-gray-300 rounded-md;
       }
     }
 

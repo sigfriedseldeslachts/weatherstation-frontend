@@ -38,6 +38,21 @@ export default {
     "pm10": {
       "name": "Particulate Matter (PM10)",
     },
+    "pm": {
+      "name": "Particulate Matter (PM)",
+      "description": "The particulate matter values are expressed in μg/m³, which are very small particles (<=10 micrometer) that hang in the air. These particles are harmful and can cause serious health risks.",
+      "25_vs_10": {
+        "title": "PM2.5 vs PM10",
+        "description": "This weather station measures both PM2.5 and PM10. But what is the difference now? With PM10 we measure all particles that are smaller than 10 micrometer, with PM2.5 we measure all particles that are smaller than 2.5 micrometer.",
+      },
+      "meanings": {
+        "good": "Good",
+        "fair": "Fair",
+        "moderate": "Moderate",
+        "poor": "Poor",
+        "very_poor": "Very poor",
+      }
+    },
     "pressure": {
       "name": "Pressure",
     }
@@ -60,5 +75,6 @@ export default {
     "year": "Current year",
     "title": "Historical graphs",
     "description": "Below you can see the historical data for a certain period. The values show an average over a certain period (1 hour for day, 1 day for week, 1 day for month, 1 month for year)."
-  }
+  },
+  "createdBy": "Created by",
 }

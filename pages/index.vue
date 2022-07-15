@@ -18,6 +18,10 @@
         </template>
       </NavigationTabs>
     </client-only>
+
+    <footer class="text-sm mt-3 text-gray-600">
+      <p><span v-t="'createdBy'" /> <a href="https://sigfried.be" class="underline hover:no-underline text-green-700">Sigfried</a></p>
+    </footer>
   </div>
 </template>
 

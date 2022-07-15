@@ -33,10 +33,25 @@ export default {
       "name": "Relatieve luchtvochtigheid",
     },
     "pm25": {
-      "name": "Fijnstof (PM2.5)",
+      "name": "Fijnstof (PM2,5)",
     },
     "pm10": {
       "name": "Fijnstof (PM10)",
+    },
+    "pm": {
+      "name": "Fijnstof (PM)",
+      "description": "De fijnstof waardes worden uitgedrukt in µg/m³, het zijn heel kleine deeltjes (<=10 micrometer) die rond hangen in de lucht. Deze deeltjes zijn schadelijk en kunnen grote gezondheidsrisico's veroorzaken.",
+      "25_vs_10": {
+        "title": "PM2,5 vs PM10",
+        "description": "Dit weerstation meet zowel PM2,5 als PM10. Maar wat is het verschil nu? Bij PM10 meten we alle deeltjes die kleiner zijn dan 10 micrometer, bij PM2,5 meten we alle deeltjes die kleiner zijn dan 2,5 micrometer.",
+      },
+      "meanings": {
+        "good": "Goed",
+        "fair": "Redelijk",
+        "moderate": "Gemiddeld",
+        "poor": "Slecht",
+        "very_poor": "Zeer slecht",
+      }
     },
     "pressure": {
       "name": "Luchtdruk",
@@ -59,5 +74,6 @@ export default {
     "year": "Huidig jaar",
     "title": "Historische grafieken",
     "description": "Hieronder kan u de historische gegevens zien over een bepaalde periode. De waardes tonen een gemiddelde aan over en bepaalde periode (1 uur voor dag, 1 dag voor week, 1 dag voor maand, 1 maand voor jaar).",
-  }
+  },
+  "createdBy": "Gemaakt door",
 }
