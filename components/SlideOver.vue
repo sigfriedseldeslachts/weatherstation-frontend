@@ -5,9 +5,9 @@
         <div @click="closeModal()" v-if="open" class="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" />
       </transition>
 
-      <section class="absolute inset-y-0 right-0 pl-10 max-w-full flex sm:pl-16" aria-labelledby="slide-over-heading">
-        <transition enter-active-class="transform transition ease-in-out duration-500 sm:duration-700" enter-class="translate-x-full" enter-to-class="translate-x-0" leave-active-class="transform transition ease-in-out duration-500 sm:duration-700" leave-class="translate-x-0" leave-to-class="translate-x-full">
-          <div class="w-screen max-w-2xl" v-if="open">
+      <transition enter-active-class="transform transition ease-in-out duration-500 sm:duration-700" enter-class="translate-x-full" enter-to-class="translate-x-0" leave-active-class="transform transition ease-in-out duration-500 sm:duration-700" leave-class="translate-x-0" leave-to-class="translate-x-full">
+        <section class="absolute inset-y-0 right-0 pl-0 sm:pl-10 max-w-full flex sm:pl-16" aria-labelledby="slide-over-heading" v-if="open">
+          <div class="w-screen max-w-2xl">
             <div class="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
               <div class="px-4 sm:px-6">
                 <div class="flex items-start justify-between">
@@ -29,8 +29,8 @@
               </div>
             </div>
           </div>
-        </transition>
-      </section>
+        </section>
+      </transition>
     </div>
   </div>
 </template>
