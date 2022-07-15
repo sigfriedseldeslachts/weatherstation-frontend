@@ -83,7 +83,7 @@ export default {
               beginAtZero: true,
               title: {
                 display: true,
-                text: 'value'
+                text: this.$t('value')
               }
             }
           },

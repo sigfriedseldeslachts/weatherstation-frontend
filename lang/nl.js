@@ -58,6 +58,7 @@ export default {
     }
   },
   "time": "Tijdstip",
+  "value": "Waarde",
   "rotatePhone": {
     "title": "Uw apparaat is te klein om een grafiek te weergeven.",
     "description": "Als u gebruik maakt van een smartphone of tablet, probeer deze dan te draaien in portret modus.",
