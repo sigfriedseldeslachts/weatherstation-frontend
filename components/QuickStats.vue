@@ -92,10 +92,17 @@ export default {
         return false;
       }
 
-      // Check if the newest update of any sensor is more than 5 minutes ago
-      return Object.keys(this.data).some(key => {
-        return this.data[key].timestamp && DateTime.local().diff(DateTime.fromISO(this.data[key].timestamp)).as('minutes') > 5;
-      });
+      // Find the latest sensor update
+      const newestTimestamp = Math.max(null, ...Object.values(this.data).map(value => {
+        try {
+          return DateTime.fromISO(value.timestamp).toMillis();
+        } catch (e) {
+          return 0;
+        }
+      }));
+
+      // Check if it's more than a minute ago
+      return DateTime.fromMillis(newestTimestamp).diffNow().as('minutes') > 1;
     },
     hasOverloadedSensor () {
       return Object.keys(this.data).some(key => this.$sensors.isSensorOverload(key, this.data[key]));
