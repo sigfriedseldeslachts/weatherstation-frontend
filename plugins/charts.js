@@ -17,7 +17,7 @@ export default ({ app }, inject) => {
       "timeUnit": "day",
     },
     "month": {
-      "type": "bar",
+      "type": "line",
       "timeUnit": "day",
     },
     "year": {

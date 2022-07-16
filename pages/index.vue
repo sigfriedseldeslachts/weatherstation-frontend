@@ -69,33 +69,15 @@ export default {
     },
     async updateChart () {
       try {
-        const { data } = await this.$axios.$get('/api/measurements');
+        const { data } = await this.$axios.$get('/api/history/hour');
 
         this.$set(this.charts, 'hour', data);
         this.$root.$emit('chart:update');
       } catch (error) {}
-    },
-    async loadOtherChartData () {
-      try {
-        const historyDay = this.$axios.$get('/api/history/day');
-        const historyWeek = this.$axios.$get('/api/history/week');
-        const historyMonth = this.$axios.$get('/api/history/month');
-
-        const [ historyDayData, historyWeekData, historyMonthData ] = await Promise.all([ historyDay, historyWeek, historyMonth ]);
-
-        this.$set(this.charts, 'day', historyDayData.data);
-        this.$set(this.charts, 'week', historyWeekData.data);
-        this.$set(this.charts, 'month', historyMonthData.data);
-      } catch (error) {
-        console.error(error);
-      }
     }
   },
   mounted () {
-    if (process.server) return;
-
     this.subscribeForMeasurementUpdates();
-    this.loadOtherChartData();
 
     setInterval(() => {
       this.updateChart();
@@ -103,16 +85,14 @@ export default {
   },
   async asyncData ({ $axios }) {
     try {
-      const latest = $axios.$get('/api/measurements/latest');
-      const lastHour = $axios.$get('/api/measurements');
-      const historyLast24H = $axios.$get('/api/history/day?since_last=true');
-      const [ actualData, lastHourData, historyLast24HData ] = await Promise.all([latest, lastHour, historyLast24H]);
+      const latest = $axios.$get('/api/measurements/actual');
+      const allHistory = $axios.$get('/api/history/all');
+      const [ actualData, allHistoryData ] = await Promise.all([latest, allHistory]);
 
       return {
         actualData: actualData.data,
         charts: {
-          hour: lastHourData.data,
-          last24: historyLast24HData.data,
+          ...allHistoryData.data
         },
       }
     } catch (error) {
