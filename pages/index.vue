@@ -4,24 +4,20 @@
 
     <client-only>
 
-      <h3 class="text-lg leading-6 font-medium text-gray-900 mt-8" v-t="'charts.title'" />
-      <p class="text-sm text-gray-700 mb-2" v-t="'charts.description'" />
+      <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white mt-8" v-t="'charts.title'" />
+      <p class="text-sm text-gray-700 dark:text-gray-300 mb-2" v-t="'charts.description'" />
 
       <!-- Tabs -->
       <NavigationTabs :options="$charts.getChartTypes()" :custom-label="(name) => this.$t('charts.' + name)" track-by="code" class="mt-3">
         <template #default>
 
-          <NavigationTab v-for="chart in $charts.getChartTypes()" :key="chart">
-            <Charts :data="charts[chart]" :type="chart" />
+          <NavigationTab v-for="chart in $charts.getChartTypes()" :key="chart" v-slot="{ active }">
+            <Charts :data="charts[chart]" :type="chart" :active="active" />
           </NavigationTab>
 
         </template>
       </NavigationTabs>
     </client-only>
-
-    <footer class="text-sm mt-3 text-gray-600">
-      <p><span v-t="'createdBy'" /> <a href="https://sigfried.be" class="underline hover:no-underline text-green-700">Sigfried</a></p>
-    </footer>
   </div>
 </template>
 
@@ -32,10 +28,11 @@ export default {
     return {
       actualData: {},
       charts: {
-        hour: null,
-        day: null,
-        week: null,
-        month: null,
+        hour: {},
+        day: {},
+        last24: {},
+        week: {},
+        month: {},
       }
     }
   },
@@ -74,15 +71,31 @@ export default {
       try {
         const { data } = await this.$axios.$get('/api/measurements');
 
-        this.$set(this, 'chartData', data);
+        this.$set(this.charts, 'hour', data);
         this.$root.$emit('chart:update');
       } catch (error) {}
+    },
+    async loadOtherChartData () {
+      try {
+        const historyDay = this.$axios.$get('/api/history/day');
+        const historyWeek = this.$axios.$get('/api/history/week');
+        const historyMonth = this.$axios.$get('/api/history/month');
+
+        const [ historyDayData, historyWeekData, historyMonthData ] = await Promise.all([ historyDay, historyWeek, historyMonth ]);
+
+        this.$set(this.charts, 'day', historyDayData.data);
+        this.$set(this.charts, 'week', historyWeekData.data);
+        this.$set(this.charts, 'month', historyMonthData.data);
+      } catch (error) {
+        console.error(error);
+      }
     }
   },
-  created () {
+  mounted () {
     if (process.server) return;
 
     this.subscribeForMeasurementUpdates();
+    this.loadOtherChartData();
 
     setInterval(() => {
       this.updateChart();
@@ -92,18 +105,14 @@ export default {
     try {
       const latest = $axios.$get('/api/measurements/latest');
       const lastHour = $axios.$get('/api/measurements');
-      const historyDay = $axios.$get('/api/history/day');
-      const historyWeek = $axios.$get('/api/history/week');
-      const historyMonth = $axios.$get('/api/history/month');
-      const [ actualData, lastHourData, historyDayData, historyWeekData, historyMonthData ] = await Promise.all([latest, lastHour, historyDay, historyWeek, historyMonth]);
+      const historyLast24H = $axios.$get('/api/history/day?since_last=true');
+      const [ actualData, lastHourData, historyLast24HData ] = await Promise.all([latest, lastHour, historyLast24H]);
 
       return {
         actualData: actualData.data,
         charts: {
           hour: lastHourData.data,
-          day: historyDayData.data,
-          week: historyWeekData.data,
-          month: historyMonthData.data,
+          last24: historyLast24HData.data,
         },
       }
     } catch (error) {

@@ -6,7 +6,7 @@
       </transition>
 
       <transition enter-active-class="transform transition ease-in-out duration-500 sm:duration-700" enter-class="translate-x-full" enter-to-class="translate-x-0" leave-active-class="transform transition ease-in-out duration-500 sm:duration-700" leave-class="translate-x-0" leave-to-class="translate-x-full">
-        <section class="absolute inset-y-0 right-0 pl-0 sm:pl-10 max-w-full flex sm:pl-16" aria-labelledby="slide-over-heading" v-if="open">
+        <section v-if="open" class="absolute inset-y-0 right-0 pl-0 sm:pl-10 max-w-full flex sm:pl-16" aria-labelledby="slide-over-heading" role="dialog">
           <div class="w-screen max-w-2xl">
             <div class="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
               <div class="px-4 sm:px-6">

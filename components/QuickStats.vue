@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 class="flex gap-2 items-center">
-      <span class="text-lg leading-6 font-medium text-gray-900" v-t="'quickstats'" />
+      <span class="text-lg leading-6 font-medium text-gray-900 dark:text-white" v-t="'quickstats'" />
       <span v-if="hasData && !lastUpdateLongTimeAgo" class="badge badge-green">
         <svg class="badge-dot animate-pulse" fill="currentColor" viewBox="0 0 8 8" cla>
           <circle cx="4" cy="4" r="3" />
@@ -11,15 +11,15 @@
       <span v-else class="badge badge-red">OFFLINE</span>
     </h3>
     <dl class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5 lg:grid-cols-4">
-      <div class="flex flex-col bg-white overflow-hidden shadow rounded-lg" v-for="(value, key) in removeNonSensorData(data)" :key="key">
+      <div class="flex flex-col bg-white dark:bg-gray-700 overflow-hidden shadow rounded-lg" v-for="(value, key) in removeNonSensorData(data)" :key="key">
         <div class="px-4 py-5 sm:p-6 flex-grow">
           <div class="flex flex-col justify-center h-full">
             <dt class="flex">
-              <span class="flex-1 text-sm font-medium text-gray-500 truncate" v-t="`sensors.${key}.name`" />
+              <span class="flex-1 text-sm font-medium text-gray-500 dark:text-gray-100 truncate" v-t="`sensors.${key}.name`" />
               <span v-if="$sensors.isSensorOverload(key, value)" v-t="'sensorOverload.badge'" class="badge badge-red truncate animate-pulse" aria-hidden="true" />
             </dt>
             <dd class="flex flex-col flex-1 items-baseline">
-              <div class="flex flex-1 text-2xl items-center font-semibold text-gray-900">
+              <div class="flex flex-1 text-2xl items-center font-semibold text-gray-900 dark:text-white">
                 <div>
                   <span v-html="$sensors.getSensorAttr(key, 'prefix')" />
                   {{ $sensors.getFormattedSensorValue(key, value) }}
@@ -28,7 +28,7 @@
               </div>
               <div class="mt-1 text-sm gap-2">
                 <button type="button" @click.prevent="openInfoModal(key)" v-if="$sensors.getSensorAttr(key, 'moreInfo')" class="block font-medium text-green-600 hover:text-green-500" v-t="'moreInfo'" />
-                <span v-if="value.timestamp" class="text-xs text-gray-600">
+                <span v-if="value.timestamp" class="text-xs text-gray-600 dark:text-gray-100">
                   <span v-t="'lastUpdate'" /> <time :datetime="value.timestamp">{{ humanizeTimestamp(value.timestamp) }}</time>
                 </span>
               </div>
@@ -41,7 +41,7 @@
       </div>
     </dl>
 
-    <div class="rounded-md bg-red-50 p-4" role="alert" aria-labelledby="no-data-alert-title" v-if="!hasData">
+    <div class="rounded-md bg-red-50 p-4 mt-2" role="alert" aria-labelledby="no-data-alert-title" v-if="!hasData">
       <div class="flex">
         <div class="flex-shrink-0">
           <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

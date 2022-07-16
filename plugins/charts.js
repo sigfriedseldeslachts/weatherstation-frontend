@@ -4,6 +4,10 @@ export default ({ app }, inject) => {
       "type": "line",
       "timeUnit": "minute",
     },
+    "last24": {
+      "type": "line",
+      "timeUnit": "hour",
+    },
     "day": {
       "type": "line",
       "timeUnit": "hour",

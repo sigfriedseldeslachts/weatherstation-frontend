@@ -34,11 +34,22 @@ export default {
     data: {
       type: Object,
       required: true,
-      default: {},
+      default: () => ({})
     },
     type: {
       type: String,
       required: true,
+    },
+    active: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  watch: {
+    active (active) {
+      if (active) {
+        this.updateChart();
+      }
     },
   },
   methods: {
@@ -95,8 +106,10 @@ export default {
         if (window.innerWidth < 550) {
           this.rotatePhoneMsg = true;
         } else {
-          this.createChart();
-          this.rotatePhoneMsg = false;
+          if (this.active) {
+            this.createChart();
+            this.rotatePhoneMsg = false;
+          }
         }
 
         return;
@@ -108,7 +121,6 @@ export default {
         this.chartjs = null;
         return;
       }
-
 
       this.$set(this.chartjs.data, 'datasets', this.getDataForChart);
       this.chartjs.update();
@@ -136,10 +148,6 @@ export default {
 
       return data;
     }
-  },
-  mounted () {
-    this.updateChart();
-    this.$root.$on('chart:update', this.updateChart);
   },
   created () {
     window.addEventListener("resize", this.updateChart);

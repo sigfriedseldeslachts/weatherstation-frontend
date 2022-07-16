@@ -69,6 +69,7 @@ export default {
   },
   "charts": {
     "hour": "Last hour",
+    "last24": "Last 24 hours",
     "day": "Today",
     "week": "Current week",
     "month": "Current month",
@@ -77,4 +78,6 @@ export default {
     "description": "Below you can see the historical data for a certain period. The values show an average over a certain period (1 hour for day, 1 day for week, 1 day for month, 1 month for year)."
   },
   "createdBy": "Created by",
+  "language": "Language",
+  "darkMode": "Turn dark mode on or off",
 }

@@ -69,6 +69,7 @@ export default {
   },
   "charts": {
     "hour": "Afgelopen uur",
+    "last24": "Afgelopen 24 uur",
     "day": "Vandaag",
     "week": "Huidige week",
     "month": "Huidige maand",
@@ -77,4 +78,6 @@ export default {
     "description": "Hieronder kan u de historische gegevens zien over een bepaalde periode. De waardes tonen een gemiddelde aan over en bepaalde periode (1 uur voor dag, 1 dag voor week, 1 dag voor maand, 1 maand voor jaar).",
   },
   "createdBy": "Gemaakt door",
+  "language": "Taal",
+  "darkMode": "Donker modus aan of uitschakelen",
 }
