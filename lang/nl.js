@@ -75,7 +75,7 @@ export default {
     "month": "Huidige maand",
     "year": "Huidig jaar",
     "title": "Historische grafieken",
-    "description": "Hieronder kan u de historische gegevens zien over een bepaalde periode. De waardes tonen een gemiddelde aan over en bepaalde periode (1 uur voor dag, 1 dag voor week, 1 dag voor maand, 1 maand voor jaar).",
+    "description": "Hieronder kan u de historische gegevens zien over een bepaalde periode. De waardes tonen een gemiddelde aan over en bepaalde periode (30m voor dag, 12u voor week, 1 dag voor maand, 1 maand voor jaar).",
   },
   "createdBy": "Gemaakt door",
   "language": "Taal",

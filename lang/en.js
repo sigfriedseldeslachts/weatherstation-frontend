@@ -75,7 +75,7 @@ export default {
     "month": "Current month",
     "year": "Current year",
     "title": "Historical graphs",
-    "description": "Below you can see the historical data for a certain period. The values show an average over a certain period (1 hour for day, 1 day for week, 1 day for month, 1 month for year)."
+    "description": "Below you can see the historical data for a certain period. The values show an average over a certain period (30m for day, 12h for week, 1 day for month, 1 month for year)."
   },
   "createdBy": "Created by",
   "language": "Language",

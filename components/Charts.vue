@@ -143,7 +143,8 @@ export default {
           borderColor: color,
           lineTension: 0.2,
           hidden: this.$sensors.getSensorAttr(sensorName, 'defaultHidden'),
-        })
+          sensorName,
+        });
       });
 
       return data;
